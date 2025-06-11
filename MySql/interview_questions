@@ -1,0 +1,346 @@
+
+query 1  : Remove duplicate values from employees table
+query 2  : Write a query to find out duplicate values from employees
+query 3  : Write a query to finf out hihest earning employees based on each position 
+query 4  : write a query to get top 3 highest earning employees
+query 5  : write a query to get top 3 lowest earning employees
+
+
+                        query 1  : Remove duplicate values from employees table
+
+                            ans :  drop table from employees where (select distinct(*) from employees)
+                            
+
+                        query 2  : Write a query to find out duplicate values from employees
+
+                            ans :  select *, row_number() over(partition my emp_id over by emp_id) as rn from employees ## this will give us the duplicates records with row_numbers
+
+                            with cte as (select *, row_number() over(partition by emp_id over by emp_id) as rn from employees
+                            ) select * from cte where rn = 2;
+
+
+                        query 3  : Write a query to finf out hihest earning employees based on each position 
+                            ans :
+                                select max(sal), position from employees group by position
+
+                        query 4  : write a query to get top 3 highest earning employees
+                            ans : 
+                            select top 3 * from employees order by position salary desc
+
+                            ## top highest salary with distinct values
+
+                            with cte as (
+                                select distinct* from employees
+                            ) select top 3 * from cte order by salary desc
+
+                        query 5  : write a query to get top 3 lowest earning employees
+
+                            ans : with cte as (
+                                select distinct * from employees
+                            ) select top 3 * from cte order by salary asc
+
+
+
+
+
+query 6 : write a query find out 2nd highest salary employees
+query 7 :  write a query to get a 2nd lowest earning employees
+query 8 :  write a query to get a 2nd highest earning emp based on department
+query 9 :  write a query to get a 3nd lowest earning emp based on location
+query 10 :  write a query to get a bottom 2nd lowest earning emp based on location
+query 11 :  write a query to get a bottom 2nd lowest earning emp based on department
+
+
+
+                query 6 : write a query find out second highest salary employees
+                    ans : 
+
+                    select *, row_number() over(order by salary desc) rn form employees
+
+                    with cte as (select *, row_number() over(order by salary desc) rn form employees
+                    ) select * from cte where rn = 2
+
+
+
+                query 7 :  write a query to get a 2nd lowest earning employees
+                    ans :
+                        select * row_number() over(order by salary asc) rn from employees
+
+
+                    with cte as (select *, row_number() over(order by salary asc) rn form employees
+                    ) select * from cte where rn = 2
+
+
+                query 8 :  write a query to get a 2nd highest earning emp based on department
+                    ans : 
+                with cte as (
+                select *, row_number() over(partition by department order by salary desc) as rn from employees
+                ) select * from cte where rn = 2
+
+
+                query 9 :  write a query to get a 3nd highest earning emp based on location
+                    ans :
+
+                    with cte as ( select *, row_number() over(partition by location order by salary asc)
+                    ) select * from cte where rn - 3
+
+
+                query 10 :  write a query to get a bottom 2nd lowest earning emp based on location
+                ans :
+
+                with cte as ( select *, row_number() over(partition by location order by salary asc))
+                select * from cte where rn in (1,2)## if we get a duplicates use dense rank function
+
+                
+                
+                query 11 :  write a query to get a bottom 2nd lowest earning emp based on department
+                                ans :
+
+                with cte as ( select *, row_number() over(partition by department order by salary asc))
+                select * from cte where rn in (1,2)## if we get a duplicates use dense rank function
+
+
+
+
+
+joining related queries
+
+
+inner join : commmon of two table
+left join  :  
+right join :
+full join  :
+
+
+
+table 1                  table 2
+id                          id
+1                           1
+1                           1
+1                           1
+1                           1
+1                           1
+                            null
+
+query 1 : how many rows will you get when you will perform inner join
+query 2 : how many rows will you get when you will perform left join
+query 3 : how many rows will you get when you will perform right join
+query 4 : how many rows will you get when you will perform full join
+
+
+query 1 : how many rows will you get when you will perform inner join
+            select * from table1 join table2 on table1.id = table2.id    #25 recores
+
+query 2 : how many rows will you get when you will perform left join
+            select * from table1 left join table2 on table1.id = table2.id     #25 recores
+
+query 3 : how many rows will you get when you will perform right join
+            select * from table1 right join table2 on table1.id = table2.id     #26 recores
+
+query 4 : how many rows will you get when you will perform full join       
+            select * from table1 full join table2 on table1.id = table2.id     #26 recores
+
+
+
+
+query 1: write a query to create new table with same schema as employee table (only schema)
+query 2: create new table same like employee table (data + schema)
+query 3: write a query where employee name starts with letter A
+query 4: write a query where department_id starts letter and ends letter is same
+query 5: write a query to get records in xml format
+query 6: how to get current date
+query 7: query to get cuurent month
+query 8: query to get current year 
+
+
+
+query 1: write a query to create new table with same schema as employee table (only schema)
+                ans :
+                select * into table3 from employee where 1=2
+
+query 2: create new table same like employee table (data + schema)
+            select * into table4 from employee employee where 1=1             
+
+
+query 3 : write a query where employee name starts with letter A
+            select * from employee where emp_name like 'A%'
+
+query 4: write a query where department_id starts letter and ends letter is same
+            select * from employee where left(department_id,1) = right(department_id,1)
+
+query 5: write a query to get records in xml format
+            select * from emplyoee for xml auto
+
+query 6 : how to get current date
+            select getdate()
+            select CURRENT_timestamp
+
+query 7: query to get cuurent month
+
+            select month(getdate())
+
+query 8: query to get current year 
+            select year(getdate())
+
+
+
+
+question 1 : difference betwwn Union and Union all
+question 2 : primary key vs union difference
+question 3 : difference between rank and dense rank
+questiuon 4 : delete vs drop vs truncate
+question 5. : what are different windows function
+question 6 : where and having clause difference
+question 7.: how to handle null values in sql
+
+
+question 1 : difference betwwn Union and Union all
+            ans : 
+            Union : Combines the results of two queries and remove duplicate rows.
+            Union All : Combines the results of two queries without remove duplicate
+
+
+question 2 : primary key vs union difference
+            primary key : used to serve as a unique identifier for each row in a table
+                        cannot accept Null values.
+                        only one primary key
+
+            unique key : Uniquely determines a row that isn't the primary key
+                    can accept Null values
+                    More than one Unique key
+
+
+question 3 : difference between rank and dense rank
+            rank() : Skips rank if there are ties. 
+
+            dense_rank() :  Does not Skips ranks, even if there are ties.
+
+            rank                    dense_rank()            salary
+            1                           1                   1000000
+            2                           2                   800000
+            2                           2                   800000
+            4                           3                   700000
+
+
+questiuon 4 : delete vs drop vs truncate
+
+            Delete : the Sql Delete command is a DML( Data Manipulation Language) command taht deletes existing records from the table in the datbese. it can delete one or more rows from the table depending on the condition given with the where clause;
+ 
+            Drop : the drop commands drops the existing table from the database. if only required the name of the table schema
+
+            truncate :  the truncate command helps us to delete the complete recored from an existing table
+
+question 5. : what are different windows function
+
+            windows function perform calculation across a set of table rows related to the current row. example include:
+            Row_number()
+            Rank()
+            Dense_Rank()
+            AVF()
+            Over()
+
+question 6 : where and having clause difference
+                Where : Filters rows before grouping (Group By)
+                Having : Filters groups created by Group By
+
+
+question 7.: how to handle null values in sql
+
+            Use Functions like:
+            IS NULL Or NOT NULL to filter records.
+            COALESCE(column, Default_value) to repalce Null with a default value.
+
+
+
+Find out the employee manager details from employee table
+    select A.EmpName, b.EmpName as Manager_Name, A.department from emp4 A left join emp4 b on a.Emp_id = b.manager_id
+
+
+query : write a query to find out cumulative sum of salary
+    select * from employee
+            
+
+            select * , sum(salary) over(order by emp_id) as rn from employee
+
+
+
+important 1
+
+
+query   fill null value with previous value
+
+Crete table Chocolate_brands(
+    chocolate_name Varchar(30),
+    Brand_name Varchar(50)
+);
+
+Insert into Chocolate_brands( chocolate_name, brand_name) values(
+    ('kitcat', 'Nestle'), 
+    '(perk', null),
+    ('Dairy milk', 'cadbury'), 
+    ('5 star', null), 
+    ('silk', null)
+);
+
+select * from chocolate_brands
+
+with cte as(
+select *, Row_number() over(order by(select null)) rn , case when brand_name is null then 0 else 1 end rn1
+from chocolate_brands
+), cte1 as(
+    select *, sum(rn1) over(order by rn) roll_sum from cte
+)
+select chocolate_name, brand_name, max(brand_name) over(partition by roll_sum) as new_brand_name from cte1
+
+
+or 
+
+
+WITH CTE AS (
+    SELECT *,
+        MAX(brand_name) OVER (
+            ORDER BY chocolate_name
+            ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW
+        ) AS filled_brand
+    FROM Chocolate_brands
+)
+SELECT chocolate_name, filled_brand AS brand_name
+FROM CTE;
+
+
+
+important 2
+
+find new and repeated customer on each date
+
+select * from customer_details
+
+
+SELECT 
+    customer_id,
+    purchase_date,
+    CASE 
+        WHEN MIN(purchase_date) OVER (PARTITION BY customer_id) = purchase_date THEN 'New'
+        ELSE 'Repeated'
+    END AS customer_type
+FROM CustomerPurchases
+ORDER BY purchase_date, customer_id;
+
+
+or
+
+SELECT 
+    c.customer_id,
+    c.purchase_date,
+    CASE 
+        WHEN c.purchase_date = f.first_purchase THEN 'New'
+        ELSE 'Repeated'
+    END AS customer_type
+FROM CustomerPurchases c
+JOIN (
+    SELECT customer_id, MIN(purchase_date) AS first_purchase
+    FROM CustomerPurchases
+    GROUP BY customer_id
+) f ON c.customer_id = f.customer_id
+ORDER BY c.purchase_date, c.customer_id
+

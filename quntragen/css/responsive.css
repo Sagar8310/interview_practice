@@ -1,0 +1,131 @@
+/* Tablet Devices (768px - 1024px) */
+@media (max-width: 1024px) {
+    .section-padding {
+        padding: 60px 0;
+    }
+    
+    .hero-content h1 {
+        font-size: 3rem;
+    }
+    
+    .flex-container {
+        gap: 30px;
+    }
+    
+    .about-image {
+        max-width: 450px;
+    }
+}
+
+/* Mobile Devices (up to 767px) */
+@media (max-width: 767px) {
+    .section-padding {
+        padding: 50px 0;
+    }
+    
+    .section-header h2 {
+        font-size: 2rem;
+    }
+    
+    /* Header */
+    .main-nav {
+        position: fixed;
+        top: 80px;
+        left: -100%;
+        width: 100%;
+        height: calc(100vh - 80px);
+        background-color: var(--white);
+        transition: all 0.5s ease;
+        padding: 30px 0;
+        overflow-y: auto;
+    }
+    
+    .main-nav.active {
+        left: 0;
+    }
+    
+    .main-nav ul {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .main-nav ul li {
+        margin: 15px 0;
+    }
+    
+    .dropdown-content {
+        position: static;
+        opacity: 1;
+        visibility: visible;
+        box-shadow: none;
+        padding: 10px 0 0 20px;
+        display: none;
+    }
+    
+    .dropdown.active .dropdown-content {
+        display: block;
+    }
+    
+    .header-cta {
+        display: none;
+    }
+    
+    .mobile-menu-btn {
+        display: block;
+    }
+    
+    /* Hero */
+    .hero {
+        min-height: 600px;
+        padding-top: 60px;
+    }
+    
+    .hero-content h1 {
+        font-size: 2.2rem;
+    }
+    
+    .hero-btns {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    /* Flex Container */
+    .flex-container {
+        flex-direction: column;
+    }
+    
+    .about-image {
+        order: -1;
+        max-width: 100%;
+    }
+    
+    /* Testimonials */
+    .testimonial-card {
+        min-width: 280px;
+    }
+    
+    /* CTA */
+    .cta-btns {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .cta-content h2 {
+        font-size: 2rem;
+    }
+}
+
+/* Small Mobile Devices (up to 480px) */
+@media (max-width: 480px) {
+    .section-header h2 {
+        font-size: 1.8rem;
+    }
+    
+    .hero-content h1 {
+        font-size: 2rem;
+    }
+    
+    .service-card {
+        padding: 20px;
+    }
+}
